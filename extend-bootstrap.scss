@@ -1,0 +1,111 @@
+/* Custom Bootstrap settings using SCSS
+*
+* Developer: Martin Cranfield
+* Date: 17.03.2017
+*
+*/
+
+/*
+*
+* Formatting: .(text)-(align)-(size)[-continuation]
+*           
+*   @ text -> ('text' | 'pull')
+*   @ $align: justify, center, left, right
+*   @ $size: xs, sm, md, lg
+*   @ continuation (optional): up, dwn -> set to keep settings for all sizes in set direction.
+*
+*/
+
+
+// SCSS Variables
+
+$xs-min: 0px;
+$xs-max: 767px;
+
+$sm-min: 768px;
+$sm-max: 991px;
+
+$md-min: 992px;
+$md-max: 1199px;
+
+$lg-min: 1200px;
+$lg-max: 9999px;
+
+// SCSS Arrays
+
+$align: justify, center, left, right;
+
+$sizes: (xs, $xs-min, $xs-max),
+        (sm, $sm-min, $sm-max),
+        (md, $md-min, $md-max),
+        (lg, $lg-min, $lg-max);
+
+// For Output
+
+.pull-center {
+        float: none !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+@each $size-id, $size-min, $size-max in $sizes {
+    // sizes bound to min and max screen widths
+    @media screen and (min-width: #{$size-min}) and (max-width: #{$size-max}) {
+        // text-align
+        @for $i from 1 through length($align) {
+            .text-#{nth($align, $i)}-#{$size-id} {
+                text-align: nth($align, $i);
+            }
+        }
+        // pull-align (float only needs left and right so sart from 3rd item in $align)
+        @for $i from 3 through length($align) {
+            .pull-#{nth($align, $i)}-#{$size-id} {
+                float: nth($align, $i);
+            }
+        }
+        .pull-center-#{$size-id} {
+            float: none !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+    }
+    // .text-(align)-(size)-dwn
+    // format will continue down all sizes from set class.
+    @media screen and (max-width: #{$size-max}) {
+        @for $i from 1 through length($align) {
+            .text-#{nth($align, $i)}-#{$size-id}-dwn {
+                text-align: nth($align, $i);
+            }
+        }
+        @for $i from 3 through length($align) {
+            .pull-#{nth($align, $i)}-#{$size-id}-dwn {
+                float: nth($align, $i);
+            }
+        }
+        .pull-center-#{$size-id}-dwn {
+            float: none !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+    }
+    // .text-(align)-(size)-up
+    // format will continue up all sizes from set class.   
+    @media screen and (min-width: #{$size-min}) {
+        @for $i from 1 through length($align) {
+            .text-#{nth($align, $i)}-#{$size-id}-up {
+                text-align: nth($align, $i);
+            }
+        }
+        @for $i from 3 through length($align) {
+            .pull-#{nth($align, $i)}-#{$size-id}-up {
+                float: nth($align, $i);
+            }
+        }
+        .pull-center-#{$size-id}-up {
+            float: none !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+    }
+}
+

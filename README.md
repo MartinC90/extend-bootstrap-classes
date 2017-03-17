@@ -36,7 +36,5 @@ Extend Bootstrap 'text' and 'pull' align classes based on screen width
 */
 
 /*
-*
 * See extend-bootstrap.css for generated output file
-*
 */
